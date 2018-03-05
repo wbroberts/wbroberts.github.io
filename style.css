@@ -8,7 +8,7 @@ body {
   background-color: #D3D3DA;
   color: #1D1A18;
   width: auto;
-  font: 'Noto Serif', serif;
+  font-family: 'Noto Serif', serif;
 }
 
 header {
@@ -18,9 +18,9 @@ header {
 h1 {
   color: #28252C;
   size: 40px;
-  font: 'Oswald', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 .main {
-
+  width: 800px;
 }
