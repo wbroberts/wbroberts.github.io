@@ -3,25 +3,103 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-body {
+a {color:inherit;}
+a:hover { color: inherit;}
+/*--
+begin basic styling
+--*/
+html {
   background-color: #D3D3DA;
   color: #1D1A18;
-  width: auto;
   font-family: 'Noto Serif', serif;
+  font-size: 10px;
 }
-
 header {
   background-color: #A75737;
+  opacity: 10%;
+  width: 100%;
+  height: auto;
+  padding: 0 10px;
+  font-size: 2rem;
 }
-
-h1 {
+nav {
+  font-size: 1.8rem;
+}
+h1, h2, h3, h4, h5, h6 {
   color: #28252C;
-  size: 40px;
   font-family: 'Oswald', sans-serif;
 }
+h1 {
+  font-size: 3.2rem;
+}
+h2 {
+  font-size: 2.4rem;
+}
+p {
+  font-size: 1.6rem;
+}
+section {
 
+}
+table {
+  font-size: 1.8rem;
+  text-align: left;
+  width: 50%;
+  display: inline-block;
+}
+th, tr, td {
+  padding: 5px 15px 5px 0;
+}
+th {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+ul li {
+  font-size: 1.6rem;
+  list-style: none;
+  display: inline-block;
+}
+form {
+
+}
+/*--
+General, reusable classes
+--*/
+.width {
+  max-width: 1200px;
+  min-width: 400px;
+  margin: 0 auto;
+  padding: 0;
+}
+.left {
+  align-items: left;
+  display: inline-block;
+  max-width: 50%
+}
+.right {
+  align-items: right;
+  display: inline-block;
+}
+/*--
+
+--*/
+#main-title {
+  font-size: 4rem;
+  color: #a28263;
+  padding: 20px;
+  max-width: 50%;
+}
 .main {
-  width: 800px;
-  margin: 0px auto;
+  padding: 20px;
+}
+.menu li {
+  letter-spacing: .2rem;
+  padding: 5px 5px;
+}
+.menu li:hover {
+  color: #d3d3da;
+  background-color: #7F422A;
+}
+.block li {
+  display: block;
 }

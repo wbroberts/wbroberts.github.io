@@ -5,28 +5,109 @@
 
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif|Oswald" rel="stylesheet">
 
+    <link type="text/css" rel="stylesheet" href="reset.css" />
     <link type="text/css" rel="stylesheet" href="style.css" />
+
+
 
   </head>
   <body>
-    <div class="main">
-      <header>
-        <h1>William Roberts</h1>
-        <nav class="menu">
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Random</li>
-          </ul>
-        </nav>
-      </header>
+    <header>
+      <div class="width">
 
-      <div class="info">
-        <h1>About</h1>
+          <h1 id="main-title" class="inline left">William Barron Roberts</h1>
 
-        <p>In school studying science, and the human body, but more interested in science.</p>
-        
+          <nav class="menu inline right">
+            <ul>
+              <a href="#about"><li>About</li></a>
+              <a href="#projects"><li>Projects</li></a>
+              <a href="#classes"><li>Classes</li></a>
+              <a href="#climbing"><li>Climbing</li></a>
+              <a href="#contact"><li>Contact</li></a>
+            </ul>
+          </nav>
+
       </div>
-    </div>
+    </header>
+
+      <div class="info width">
+        <section class="main" id="about">
+
+          <h1>About</h1>
+
+          <p>This page is just for practicing web development. As I learn more and more I will add more content.</p>
+          <p>The end result should be a dynamic, responsive website that also includes a game or two.</p>
+
+        </section>
+
+        <section class="main" id="projects">
+          <h1>Projects</h1>
+
+          <p>This is my main project. At the moment.</p>
+
+          <h2>Goals</h2>
+
+          <ul class="block">
+            <li>Master HTML5</li>
+            <li>Master CSS</li>
+            <li>Learn Ruby</li>
+            <li>Learn Rails</li>
+            <li>Master JavaScript</li>
+            <li>Create a few online games</li>
+            <li>Make some money solving problems and creating!</li>
+          </ul>
+
+        </section>
+
+        <section class="main" id="classes">
+          <h1>Classes</h1>
+
+          <p>Currently taking a full course load at the University of Utah:</p>
+
+          <table class="classes">
+            <tr>
+              <th>Class</th>
+              <th>Credits</th>
+              <th>Days</th>
+            </tr>
+            <tr>
+              <th>Physics 2</th>
+              <th>4 credits</th>
+              <th>MTWHF</th>
+            </tr>
+            <tr>
+              <th>Kinesiology</th>
+              <th>3 credits</th>
+              <th>MWF</th>
+            </tr>
+            <tr>
+              <th>Exercise Physiology</th>
+              <th>3 credits</th>
+              <th>TH</th>
+            </tr>
+            <tr>
+              <th>Cell Biology</th>
+              <th>3 credits</th>
+              <th>TH</th>
+            </tr>
+          </table>
+
+        </section>
+
+        <section class="main" id="climbing">
+          <h1>Climbing</h1>
+
+          <p>Currently out due to a dislocated shoulder.</p>
+        </section>
+
+        <section class="main" id="contact">
+          <h1>Contact</h1>
+
+          <p>You can contact me, but I don't know why or how you would.</p>
+          <form>
+
+          </form>
+        </section>
+      </div>
   </body>
 </html>
