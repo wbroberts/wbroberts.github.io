@@ -18,7 +18,7 @@ middle f2b11b
 html {
   background-color: #F2F2F2;
   color: #1D1A18;
-  font-family: 'Noto Serif', serif;
+  font-family: 'Istok Web', sans-serif;
   font-size: 10px;
 }
 header {
@@ -27,7 +27,7 @@ header {
   width: 90%;
   height: auto;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0;
   font-size: 2rem;
 }
 nav {
@@ -35,7 +35,7 @@ nav {
 }
 h1, h2, h3, h4, h5, h6 {
   color: ##30383b;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Play', sans-serif;
 }
 h1 {
   font-size: 3.2rem;
@@ -78,28 +78,21 @@ form {
 General, reusable classes
 --*/
 .width {
-  max-width: 1200px;
+  max-width: 1000px;
   min-width: 400px;
   margin: 0 auto;
   padding: 0;
 }
-.left {
-  align-items: left;
-  display: inline-block;
-  max-width: 50%
-}
-.right {
-  align-items: right;
-  display: inline-block;
-}
+
 /*--
 
 --*/
 #main-title {
   font-size: 7rem;
   font-weight: 400;
+  letter-spacing: .25rem;
   color: #d78d1e;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   min-width: 450px;
 }
@@ -107,17 +100,6 @@ General, reusable classes
   width: 90%;
   min-width: 450px;
   margin: 15px 2.5%;
-}
-.menu li {
-  letter-spacing: .2rem;
-  padding: 5px 5px;
-}
-.menu li:hover {
-  color: #d3d3da;
-  background-color: #7F422A;
-}
-.block li {
-  display: block;
 }
 .head {
   font-size: 3.5rem;
