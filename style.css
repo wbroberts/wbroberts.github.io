@@ -7,18 +7,26 @@ a {color:inherit;}
 a:hover { color: inherit;}
 /*--
 begin basic styling
+
+colors needed:
+background f2f2f2
+text 30383b
+dark  d78d1e
+light f2c608
+middle f2b11b
 --*/
 html {
-  background-color: #D3D3DA;
+  background-color: #F2F2F2;
   color: #1D1A18;
   font-family: 'Noto Serif', serif;
   font-size: 10px;
 }
 header {
-  background-color: #A75737;
+  border-bottom: 1px solid #30383b;
   opacity: 10%;
-  width: 100%;
+  width: 90%;
   height: auto;
+  margin: 0 auto;
   padding: 0 10px;
   font-size: 2rem;
 }
@@ -26,20 +34,24 @@ nav {
   font-size: 1.8rem;
 }
 h1, h2, h3, h4, h5, h6 {
-  color: #28252C;
+  color: ##30383b;
   font-family: 'Oswald', sans-serif;
 }
 h1 {
   font-size: 3.2rem;
+  margin: 0 0 20px 0;
 }
 h2 {
   font-size: 2.4rem;
 }
 p {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  line-height: 140%;
+  padding: 0 0 15px 0;
 }
 section {
-
+  width: 100%;
+  padding: 10px 20px;
 }
 table {
   font-size: 1.8rem;
@@ -84,13 +96,17 @@ General, reusable classes
 
 --*/
 #main-title {
-  font-size: 4rem;
-  color: #a28263;
+  font-size: 7rem;
+  font-weight: 400;
+  color: #d78d1e;
   padding: 20px;
-  max-width: 50%;
+  text-align: center;
+  min-width: 450px;
 }
 .main {
-  padding: 20px;
+  width: 90%;
+  min-width: 450px;
+  margin: 15px 2.5%;
 }
 .menu li {
   letter-spacing: .2rem;
@@ -102,4 +118,7 @@ General, reusable classes
 }
 .block li {
   display: block;
+}
+.head {
+  font-size: 3.5rem;
 }
