@@ -1,0 +1,54 @@
+/*-----
+Colors for game:
+#53AAE0 //blue-ish
+#7CCAFA //lighter
+#F1EDF6 //grey background
+#414645 //dark text
+#767FF9 //purple compliment
+
+font-family: 'Orbitron', sans-serif;
+-------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 10px;
+}
+html {
+  color: #414645;
+  background-color: #F1EDF6;
+  font-family: 'Orbitron', sans-serif;
+}
+body {
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+}
+header {
+  border-bottom: 1px solid #767FF9;
+  width: auto;
+  margin: 5px 0 10px 0;
+}
+h1 {
+  padding: 10px 0;
+  font-size: 3.5rem;
+}
+h1 a {
+  text-decoration: none;
+}
+p {
+  font-size: 1.8rem;
+  line-height: 140%;
+  margin: 10px 0;
+}
+a {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+/*#gameCanvas {
+  width: 800px;
+  height: 600px;
+  margin: 10 auto;
+  text-align: center;
+}
