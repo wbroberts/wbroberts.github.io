@@ -14,11 +14,14 @@ text 30383b
 dark  d78d1e
 light f2c608
 middle f2b11b
+
+font-family: 'PT Sans Narrow', sans-serif;
+font-family: 'Slabo 27px', serif;
 --*/
 html {
   background-color: #F2F2F2;
   color: #1D1A18;
-  font-family: 'Istok Web', sans-serif;
+  font-family: 'Slabo 27px', serif;
   font-size: 10px;
 }
 header {
@@ -35,7 +38,7 @@ nav {
 }
 h1, h2, h3, h4, h5, h6 {
   color: ##30383b;
-  font-family: 'Play', sans-serif;
+  font-family: 'PT Sans Narrow', sans-serif;
 }
 h1 {
   font-size: 3.2rem;
