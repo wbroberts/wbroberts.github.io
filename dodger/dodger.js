@@ -7,6 +7,7 @@
 
   var frameCount = 0;
 
+
   var score = 0;
   var bestScore = 0;
 
@@ -48,6 +49,43 @@
 
 
 
+
+    }
+
+  }
+
+  var ammoPack = {
+
+    size: 15,
+    speed: 2,
+    maxNumber: 1,
+    array: [],
+
+    add: function() {
+      let x = canvas.width + 40;
+      let y = Math.floor(Math.random() * canvas.height);
+
+      ammoPack.array.push({"x": x, "y": y, "speed": ammoPack.speed, "size": ammoPack.size});
+    },
+
+    render: function() {
+
+      if (ammoPack.array.length < ammoPack.maxNumber && !isGameOver) {
+        ammoPack.add();
+      }
+
+      let ammo = new Image();
+      ammo.src = 'ammo-pack.png';
+
+      for (let i = 0; i < ammoPack.array.length; i++) {
+        let currentAmmo = ammoPack.array[i];
+
+        ctx.drawImage(ammo, currentAmmo.x -= currentAmmo.speed, currentAmmo.y, currentAmmo.size, currentAmmo.size);
+
+        if (currentAmmo.x < -40) {
+          currentAmmo.speed = 0;
+        }
+      }
 
     }
 
@@ -110,19 +148,28 @@
 
     up: false,
     down: false,
+    left: false,
+    right: false,
+    space: false,
 
     keyDown: function(evt) {
       switch (evt.keyCode) {
+        case 37: control.left = true; break;
+        case 39: control.right = true; break;
         case 38: control.up = true; break;
         case 40: control.down = true; break;
+        case 32: control.space = true; break;
       }
       evt.preventDefault;
     },
 
     keyUp: function(evt) {
       switch (evt.keyCode) {
+        case 37: control.left = false; break;
+        case 39: control.right = false; break;
         case 38: control.up = false; break;
         case 40: control.down = false; break;
+        case 32: control.space = false; break;
       }
       evt.preventDefault;
     }
@@ -212,7 +259,10 @@
     height: 40,
     x: 40,
     y: display.height / 2 - 20,
+    oldX: 0,
+    oldY: 0,
     velocityY: 5,
+    velocityX: 4,
     lives: 3,
 
     render: function() {
@@ -229,13 +279,32 @@
         spaceship.y += spaceship.velocityY;
       }
 
+      if (control.left) {
+        spaceship.x -= spaceship.velocityX;
+      } else if (control.right) {
+        spaceship.x += spaceship.velocityX;
+      }
+
       if (spaceship.y <= 0) {
         spaceship.y = 0;
       } else if (spaceship.y + spaceship.height >= canvas.height) {
-        spaceship.y = canvas.height -spaceship.height;
+        spaceship.y = canvas.height - spaceship.height;
       }
 
-    }
+      if (spaceship.x <= 0) {
+        spaceship.x = 0;
+      } else if (spaceship.x + spaceship.width >= canvas.width) {
+        spaceship.x = canvas.width - spaceship.width;
+      }
+
+    },
+
+    // Ammo info
+    hasAmmo: false,
+    maxShot: 1,
+    bulletSpeed: 6,
+    ammo: [],
+    shot: [],
 
   }
 
@@ -261,6 +330,8 @@
 
       frameCount++;
 
+      console.log(spaceship.shot);
+
       asteroid.render();
 
       // Asteroid and spaceship collision detection
@@ -279,7 +350,7 @@
         }
       }
 
-      // Add the alien spaceship
+      // Add alien spaceships
       if (frameCount > 1000) {
 
         alienship.render();
@@ -319,7 +390,7 @@
 
       }
 
-      // Add the heart to gain extra life
+      // Add hearts to gain extra life
       if (frameCount > 2000) {
 
         life.render();
@@ -341,6 +412,86 @@
         if (frameCount % 2000 == 0 && life.array.length !== 0) {
           life.array.pop();
         }
+      }
+
+      // Add a ammo packs
+      if (frameCount > 3000) {
+
+        ammoPack.render();
+
+        // AmmoPack collision and detection and addition to spaceship's ammo reserve
+        for (let i = 0; i < ammoPack.array.length; i++) {
+          let theAmmo = ammoPack.array[i];
+
+          if (theAmmo.x + theAmmo.size >= spaceship.x &&
+              theAmmo.x <= spaceship.x + spaceship.width &&
+              theAmmo.y + theAmmo.size >= spaceship.y &&
+              theAmmo.y <= spaceship.y + spaceship.height) {
+
+                theAmmo.x = -30;
+
+                spaceship.hasAmmo = true;
+
+                for (let b = 0; b < 3; b++) {
+                  spaceship.ammo.push({
+                    "x": spaceship.x + spaceship.width,
+                    "y": spaceship.y + spaceship.height/2,
+                    "speed": spaceship.ammoSpeed,
+                    "width": 10,
+                    "height": 5
+                  });
+                }
+
+          }
+        }
+
+        if (frameCount % 2000 == 1 && ammoPack.array.length !== 0) {
+          ammoPack.array.pop();
+        }
+
+        // If the player has ammo, they can shoot
+        if (spaceship.hasAmmo && control.space &&
+            spaceship.shot.length < spaceship.maxShot) {
+
+              spaceship.ammo.pop();
+              spaceship.oldX = spaceship.x;
+              spaceship.oldY = spaceship.y;
+
+              spaceship.shot.push({
+                "x": spaceship.oldX + spaceship.width,
+                "y": spaceship.oldY + spaceship.height/2,
+                "speed": 6,
+                "width": 8,
+                "height": 3
+              });
+
+        }
+
+        for (let x = 0; x < spaceship.shot.length; x++) {
+          let bullet = spaceship.shot[x];
+
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(bullet.x += bullet.speed, bullet.y, bullet.width, bullet.height);
+
+          if (bullet.x + bullet.width >= alienship.array[0].x &&
+              bullet.x <= alienship.array[0].x + alienship.array[0].size &&
+              bullet.y + bullet.height >= alienship.array[0].y &&
+              bullet.y <= alienship.array[0].y + alienship.array[0].size) {
+
+                spaceship.shot.pop();
+                alienship.array.pop();
+
+          }
+
+          if (bullet.x > canvas.width) {
+            spaceship.shot.pop();
+          }
+        }
+
+        if (spaceship.ammo.length == 0) {
+          spaceship.hasAmmo = false;
+        }
+
       }
 
       // Increase score while alive
@@ -381,6 +532,9 @@
     asteroid.array = [];
     alienship.array = [];
     life.array = [];
+    spaceship.shot = [];
+    spaceship.ammo = [];
+    ammoPack.array = [];
 
     // Resets the variables and restarts game
     document.addEventListener('click', function(evt){
