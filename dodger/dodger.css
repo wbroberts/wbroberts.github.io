@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  font-family: 'Roboto Condensed', arial, sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+canvas {
+  border: 1px solid #ecf0f1;
+}
+
+strong {
+  font-weight: 400;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 300%;
+  color: #ecf0f1;
+}
+
+.the-game {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.score,
+.lives {
+  display: inline-block;
+  margin: 30px;
+}
+
+.score {
+  float: right;
+  text-align: right;
+}
+
+.best-score {
+  margin: 30px;
+  display: block;
+  text-align: center;
+}
