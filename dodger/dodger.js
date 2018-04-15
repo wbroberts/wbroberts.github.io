@@ -13,8 +13,10 @@
 
   var isGameOver = false;
 
-  var gameBgAudio = document.createElement('audio');
-  gameBgAudio.src = 'resources/audio/Starlight.wav';
+  var laserShot = document.createElement('audio');
+  laserShot.src = "resources/audio/laser-shot.wav";
+  var collisionSound = document.createElement('audio');
+  collisionSound.src = "resources/audio/collision.wav";
 
   var alienship = {
 
@@ -357,6 +359,7 @@
 
                 asteroid.array.splice(i, 1);
                 spaceship.lives--;
+                collisionSound.play();
                 spaceship.canCollide = false;
                 timeHit = frameCount;
           }
@@ -408,6 +411,7 @@
 
                   alienship.array.pop();
                   spaceship.lives--;
+                  collisionSound.play();
                   spaceship.canCollide = false;
                   timeHit = frameCount;
             }
@@ -492,6 +496,7 @@
               spaceship.ammo.pop();
               spaceship.oldX = spaceship.x;
               spaceship.oldY = spaceship.y;
+              laserShot.play();
 
               spaceship.shot.push({
                 "x": spaceship.oldX + spaceship.width,
@@ -507,7 +512,7 @@
         for (let x = 0; x < spaceship.shot.length; x++) {
           let bullet = spaceship.shot[x];
 
-          ctx.fillStyle = '#fff';
+          ctx.fillStyle = 'blue';
           ctx.fillRect(bullet.x += bullet.speed, bullet.y, bullet.width, bullet.height);
 
           if (alienship.array.length !== 0) {
