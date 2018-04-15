@@ -16,7 +16,13 @@
   var laserShot = document.createElement('audio');
   laserShot.src = "resources/audio/laser-shot.wav";
   var collisionSound = document.createElement('audio');
-  collisionSound.src = "resources/audio/collision.wav";
+  collisionSound.src = "resources/audio/blip.wav";
+  var pointSound = document.createElement('audio');
+  pointSound.src = "resources/audio/points.wav";
+  var collectionSound = document.createElement('audio');
+  collectionSound.src = "resources/audio/life.wav";
+  var blowupSound = document.createElement('audio');
+  blowupSound.src = "resources/audio/explosion.wav";
 
   var alienship = {
 
@@ -445,6 +451,7 @@
 
                 spaceship.lives++;
                 theHeart.x = -30;
+                collectionSound.play();
 
               }
         }
@@ -469,7 +476,7 @@
               theAmmo.y <= spaceship.y + spaceship.height) {
 
                 theAmmo.x = -30;
-
+                collectionSound.play();
                 spaceship.hasAmmo = true;
 
                 for (let b = 0; b < 3; b++) {
@@ -523,6 +530,7 @@
 
                   spaceship.shot.pop();
                   alienship.array.pop();
+                  blowupSound.play();
                   score = score + 100;
             }
           }
@@ -556,6 +564,10 @@
         score++;
       }
 
+      // Make sound every 1000 points
+      if (score % 1000 == 0) {
+        pointSound.play();
+      }
       // Add one more asteroid to screen as time increases
       if (frameCount % 500 == 0 && asteroid.maxNumber < 8) {
         asteroid.maxNumber++;
@@ -610,7 +622,7 @@
     frameCount = 0;
     spaceship.lives = 3;
     spaceship.canCollide = true;
-    gameBgAudio.play();
+
   }
 
   window.addEventListener('keydown', control.keyDown);
