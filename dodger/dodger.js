@@ -318,7 +318,7 @@
 
   // Game logic
   function gameLoop() {
-
+    console.log(5000 % 2000);
     // Score and lives for player
     document.querySelector('.score').innerHTML = "<strong>Score:</strong> " + score;
     document.querySelector('.lives').innerHTML = "<strong>Lives:</strong> " + spaceship.lives;
@@ -329,8 +329,6 @@
     if (display.stars.length > 1150) {
 
       frameCount++;
-
-      console.log(spaceship.shot);
 
       asteroid.render();
 
@@ -348,6 +346,23 @@
               spaceship.lives--;
 
         }
+
+        if (spaceship.hasAmmo && spaceship.shot.length !== 0) {
+
+          let bullet = spaceship.shot[0];
+
+          if (check.x + 30 >= bullet.x &&
+              check.x <= bullet.x + bullet.width &&
+              check.y  + 30 >= bullet.y &&
+              check.y <= bullet.y + bullet.height) {
+
+                asteroid.array.splice(i, 1);
+
+                score = score + 25;
+
+          }
+        }
+
       }
 
       // Add alien spaceships
@@ -445,7 +460,7 @@
           }
         }
 
-        if (frameCount % 2000 == 1 && ammoPack.array.length !== 0) {
+        if (frameCount % 2000 == 1000 && ammoPack.array.length !== 0) {
           ammoPack.array.pop();
         }
 
@@ -467,6 +482,7 @@
 
         }
 
+        // Rendering the bullet and bullet collision
         for (let x = 0; x < spaceship.shot.length; x++) {
           let bullet = spaceship.shot[x];
 
@@ -481,6 +497,8 @@
                 spaceship.shot.pop();
                 alienship.array.pop();
 
+                score = score + 100;
+
           }
 
           if (bullet.x > canvas.width) {
@@ -493,6 +511,13 @@
         }
 
       }
+
+      // Display ammo count
+      let ammoCount = spaceship.ammo.length;
+
+      ctx.fillStyle = 'white';
+      ctx.font = '20px Arial';
+      ctx.fillText('Ammo: ' + ammoCount, 50, 50, 100, 50);
 
       // Increase score while alive
       if (spaceship.lives !== 0) {
