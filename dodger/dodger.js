@@ -6,12 +6,15 @@
   var ctx = canvas.getContext('2d');
 
   var frameCount = 0;
-
+  var timeHit = 0;
 
   var score = 0;
   var bestScore = 0;
 
   var isGameOver = false;
+
+  var gameBgAudio = document.createElement('audio');
+  gameBgAudio.src = 'resources/audio/Starlight.wav';
 
   var alienship = {
 
@@ -264,11 +267,19 @@
     velocityY: 5,
     velocityX: 4,
     lives: 3,
+    canCollide: true,
 
     render: function() {
       let theSpaceship = new Image();
       theSpaceship.src = 'spaceship.png';
       ctx.drawImage(theSpaceship, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+
+      if (!spaceship.canCollide) {
+        let redSpaceship = new Image();
+        redSpaceship.src = 'spaceship-red.png';
+        ctx.drawImage(redSpaceship, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+      }
+
     },
 
     movement: function() {
@@ -318,7 +329,7 @@
 
   // Game logic
   function gameLoop() {
-    console.log(5000 % 2000);
+
     // Score and lives for player
     document.querySelector('.score').innerHTML = "<strong>Score:</strong> " + score;
     document.querySelector('.lives').innerHTML = "<strong>Lives:</strong> " + spaceship.lives;
@@ -337,13 +348,18 @@
 
         let check = asteroid.array[i];
 
-        if (check.x + 30 >= spaceship.x &&
-            check.x <= spaceship.x + spaceship.width - 10 &&
-            check.y  + 30 >= spaceship.y &&
-            check.y <= spaceship.y + spaceship.height) {
+        if (spaceship.canCollide) {
 
-              asteroid.array.splice(i, 1);
-              spaceship.lives--;
+          if (check.x + 30 >= spaceship.x &&
+              check.x <= spaceship.x + spaceship.width - 10 &&
+              check.y  + 30 >= spaceship.y &&
+              check.y <= spaceship.y + spaceship.height) {
+
+                asteroid.array.splice(i, 1);
+                spaceship.lives--;
+                spaceship.canCollide = false;
+                timeHit = frameCount;
+          }
 
         }
 
@@ -357,8 +373,7 @@
               check.y <= bullet.y + bullet.height) {
 
                 asteroid.array.splice(i, 1);
-
-                score = score + 25;
+                score = score + 50;
 
           }
         }
@@ -372,9 +387,9 @@
 
         // Have alien chase down player
         // Also alien collision detection
-        for (let i = 0; i < alienship.array.length; i++) {
+        if (alienship.array.length !== 0) {
 
-          let theAlien = alienship.array[i];
+          let theAlien = alienship.array[0];
 
           // Chase down spaceship
           if (theAlien.y < spaceship.y) {
@@ -384,22 +399,28 @@
           }
 
           // Alien and player collision detection
-          if (theAlien.y <= spaceship.y  + spaceship.height &&
-              theAlien.y + 20 >= spaceship.y &&
-              theAlien.x  + 20 >= spaceship.x &&
-              theAlien.x <= spaceship.x + spaceship.width)  {
+          if (spaceship.canCollide) {
 
-                alienship.array.pop();
-                spaceship.lives--;
+            if (theAlien.y <= spaceship.y  + spaceship.height &&
+                theAlien.y + 20 >= spaceship.y &&
+                theAlien.x  + 20 >= spaceship.x &&
+                theAlien.x <= spaceship.x + spaceship.width)  {
 
-              }
+                  alienship.array.pop();
+                  spaceship.lives--;
+                  spaceship.canCollide = false;
+                  timeHit = frameCount;
+            }
+
+          }
+
         }
 
         if (frameCount >= 1500 && frameCount % 500 == 0 && alienship.speed < 4) {
           alienship.speed++;
         }
 
-        if (frameCount % 3000 == 0) {
+        if (frameCount % 3000 == 0 && alienship.chaseSpeed < 5) {
           alienship.chaseSpeed++;
         }
 
@@ -489,16 +510,16 @@
           ctx.fillStyle = '#fff';
           ctx.fillRect(bullet.x += bullet.speed, bullet.y, bullet.width, bullet.height);
 
-          if (bullet.x + bullet.width >= alienship.array[0].x &&
-              bullet.x <= alienship.array[0].x + alienship.array[0].size &&
-              bullet.y + bullet.height >= alienship.array[0].y &&
-              bullet.y <= alienship.array[0].y + alienship.array[0].size) {
+          if (alienship.array.length !== 0) {
+            if (bullet.x + bullet.width >= alienship.array[0].x &&
+                bullet.x <= alienship.array[0].x + alienship.array[0].size &&
+                bullet.y + bullet.height >= alienship.array[0].y &&
+                bullet.y <= alienship.array[0].y + alienship.array[0].size) {
 
-                spaceship.shot.pop();
-                alienship.array.pop();
-
-                score = score + 100;
-
+                  spaceship.shot.pop();
+                  alienship.array.pop();
+                  score = score + 100;
+            }
           }
 
           if (bullet.x > canvas.width) {
@@ -512,15 +533,21 @@
 
       }
 
+      var timeSinceHit = frameCount - timeHit;
+
+      if (timeSinceHit >= 100) {
+        spaceship.canCollide = true;
+      }
+
       // Display ammo count
       let ammoCount = spaceship.ammo.length;
 
       ctx.fillStyle = 'white';
       ctx.font = '20px Arial';
-      ctx.fillText('Ammo: ' + ammoCount, 50, 50, 100, 50);
+      ctx.fillText('Ammo: ' + ammoCount, 25, 25, 100, 50);
 
       // Increase score while alive
-      if (spaceship.lives !== 0) {
+      if (spaceship.lives !== 0 && spaceship.canCollide) {
         score++;
       }
 
@@ -540,7 +567,7 @@
         }
 
         if (bestScore > 0) {
-          document.querySelector('.best-score').innerHTML = "<strong>Best Score:</strong> " + bestScore;
+          document.querySelector('.best-score').innerHTML = "<strong>High Score:</strong> " + bestScore;
         }
 
         gameOver();
@@ -577,7 +604,8 @@
     score = 0;
     frameCount = 0;
     spaceship.lives = 3;
-
+    spaceship.canCollide = true;
+    gameBgAudio.play();
   }
 
   window.addEventListener('keydown', control.keyDown);

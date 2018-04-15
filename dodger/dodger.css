@@ -48,3 +48,9 @@ strong {
   display: block;
   text-align: center;
 }
+
+.ion-icon-white {
+  display: inline-block;
+  font-size: 200%;
+  color: #fff;
+}
